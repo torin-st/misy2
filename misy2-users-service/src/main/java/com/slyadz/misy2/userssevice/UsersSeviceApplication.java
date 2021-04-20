@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class Misy2UsersSeviceApplication {
+public class UsersSeviceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Misy2UsersSeviceApplication.class, args);
+		SpringApplication.run(UsersSeviceApplication.class, args);
 	}
 
 	@Bean
