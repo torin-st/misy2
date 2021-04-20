@@ -1,3 +1,4 @@
 rootProject.name = 'misy2'
 
 include 'misy2-users-service'
+include 'misy2-discovery-server'
