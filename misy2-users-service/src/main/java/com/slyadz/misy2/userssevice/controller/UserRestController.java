@@ -30,7 +30,7 @@ public final class UserRestController {
 		return userRepository.findAll();
 	}
 
-	@RequestMapping("/instances/{applicationName}")
+	@GetMapping("instances/{applicationName}")
 	public List<ServiceInstance> serviceInstancesByApplicationName(
 			@PathVariable String applicationName) {
 		return this.discoveryClient.getInstances(applicationName);
