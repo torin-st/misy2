@@ -1,4 +1,4 @@
-package com.slyadz.mis2.gateway;
+package com.slyadz.misy2.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,9 +19,10 @@ public class GatewayApplication {
 						.path("/get")
 						.filters(f -> f.addRequestHeader("Hello", "World"))
 						.uri("http://httpbin.org:80"))
-				/*.route(p -> p
+				.route(p -> p
 						.path("/users")
-						.uri("http://localhost:8001/api/users"))*/
+						.filters(f -> f.prefixPath("/api"))
+						.uri("http://localhost:8001"))
 				.build();
 	}
 }
