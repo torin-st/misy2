@@ -1,7 +1,5 @@
 package com.slyadz.misy2.gateway;
 
-import java.net.URI;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -24,7 +22,6 @@ public class GatewayApplication {
 
 	@Bean
 	public RouteLocator myRoutes(RouteLocatorBuilder routeLocatorBuilder) {
-		URI serviceURI = discoveryClient.getInstances(USERS_SERVICE_NAME).get(0).getUri();
 		return routeLocatorBuilder.routes()
 				.route(p -> p
 						.path("/get")
@@ -33,7 +30,7 @@ public class GatewayApplication {
 				.route(p -> p
 						.path("/users")
 						.filters(f -> f.prefixPath("/api"))
-						.uri(serviceURI))
+						.uri("lb://" + USERS_SERVICE_NAME))
 				.build();
 	}
 }
