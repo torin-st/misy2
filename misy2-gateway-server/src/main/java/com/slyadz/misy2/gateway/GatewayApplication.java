@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 public class GatewayApplication {
 	private final String USERS_SERVICE_NAME = "users-service";
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayApplication.class, args);
 	}
@@ -22,8 +23,13 @@ public class GatewayApplication {
 						.filters(f -> f.addRequestHeader("Hello", "World"))
 						.uri("http://httpbin.org:80"))
 				.route(p -> p
-						.path("/users")			//map to /users
-						.filters(f -> f.prefixPath("/api"))	//add /api to path = /api/users
+						.path("/users") //map to /users
+						.filters(f -> f
+								.prefixPath("/api") //add /api to path = /api/users
+								.circuitBreaker(c -> c.setName("resilience4j")
+										.setFallbackUri("/get") //if service is not available - redirect to /get
+								)
+						)
 						.uri("lb://" + USERS_SERVICE_NAME))	//redirect ot uri, lb: - to using load balancing
 				.route(p -> p
 						.path("/headers")			//map to /headers
