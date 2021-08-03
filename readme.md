@@ -136,17 +136,11 @@ Visit http://localhost:8888/gateway-server/docker to see configuration for "dock
 
 Visit http://localhost:8888/gateway-server/dev to see configuration for "dev" profile of "gateway-server" app.
 
+### misy2-discovery-server
+
 Visit http://localhost:8761/ to see Eureka dashboard.
 
-Visit http://localhost:[randomPort]/api/users to see list of users.
-
-To know an actual value of randomPort see output of users-service (console log) during startup of a sevice:
-
-`...main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 64110 (http) with context path ''`
-
-Visit http://localhost:[randomPort]/api/instances/users-service to see list of registered instances of "users-service"
- services. The misy2-users-service will take about a minute to register itself in the registry and to refresh its own
-  list of registered instances from the registry.
+### misy2-gateway-server
 
 Visit http://localhost:8080/get to see how Gateway redirect request to http://httpbin.org and add custom header.
 
@@ -157,10 +151,22 @@ Visit http://localhost:8080/users without starting Users-service to see how Spri
 (Resilience4J) redirect request to http://localhost:8080/get.
 
 Visit http://localhost:8080/headers to see how how Gateway redirect request to Users-service, Spring Cloud Sleuth
- adds headers (x-b3-traceid, x-b3-spanid, x-b3-parentspanid, x-b3-sampled). Look at users-service output
- (console log) to see headers values :
- 
- `...c.s.m.u.controller.UserRestController    : header [x-b3-traceid]: 4d384d32cd2e7ec3`
- 
-Then Users-service makes request to http://httpbin.org - you see response for this request at 
+adds headers (x-b3-traceid, x-b3-spanid, x-b3-parentspanid, x-b3-sampled). Look at users-service output
+(console log) to see headers values :
+
+`...c.s.m.u.controller.UserRestController    : header [x-b3-traceid]: 4d384d32cd2e7ec3`
+
+Then Users-service makes request to http://httpbin.org - you see response for this request at
 http://localhost:8080/headers. We have the same "x-b3-traceid" header and different "x-b3-parentspanid", "x-b3-spanid".
+
+### misy2-users-service
+
+Visit http://localhost:[randomPort]/api/users to see list of users.
+
+To know an actual value of randomPort see output of users-service (console log) during startup of a sevice:
+
+`...main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 64110 (http) with context path ''`
+
+Visit http://localhost:[randomPort]/api/instances/users-service to see list of registered instances of "users-service"
+ services. The misy2-users-service will take about a minute to register itself in the registry and to refresh its own
+  list of registered instances from the registry.
