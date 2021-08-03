@@ -3,17 +3,27 @@
 Microservice system - to demonstrate Spring Cloud stack. Can work locally or in Docker container.
 
 ## Architecture
-Services:
+
+### Services
+
 - misy2-config-server - Spring Cloud Config, port 8888
 - misy2-discovery-server - Netflix Eureka service registry, port 8761
 - misy2-gateway-server - Spring Cloud Gateway, port 8080
 - misy2-users-sevice - simple crud service over User entity, random port
 
-Build: Gradle.
+### Build
 
-DB: H2 in-memory.
+Gradle.
 
-Prerequisites: Java SDK 11, Docker (if run in container).
+###DB
+
+H2 in-memory.
+
+### Prerequisites
+
+- Java SDK 11
+- Docker (if run in container)
+- Docker network (if run in container): `docker network create misy2`
 
 ## Build
 
@@ -118,7 +128,13 @@ Then others:
 
 ## Test
 
+### misy2-config-server
+
 Visit misy2-config-server\src\main\resources\configs\ to see configurations of all applications.
+
+Visit http://localhost:8888/gateway-server/docker to see configuration for "docker" profile of "gateway-server" app.
+
+Visit http://localhost:8888/gateway-server/dev to see configuration for "dev" profile of "gateway-server" app.
 
 Visit http://localhost:8761/ to see Eureka dashboard.
 
