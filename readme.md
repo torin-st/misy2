@@ -110,21 +110,21 @@ Windows: `gradlew.bat bootRun`
 
 At first, run misy2-config-server:
 
-`docker run --name config -p 8888:8888 --network misy2 -t misy2/misy2-config`
+`sudo docker run --name config -p 8888:8888 --network misy2 -t misy2/misy2-config`
 
 After then, run misy2-discovery-server:
 
-`docker run --name discovery -p 8761:8761 --network misy2 -t misy2/misy2-discovery`
+`sudo docker run --name discovery -p 8761:8761 --network misy2 -t misy2/misy2-discovery`
 
 Then others:
 
 - gateway:
 
-`docker run --name gateway -p 8080:8080 --network misy2 -t misy2/misy2-gateway`
+`sudo docker run --name gateway -p 8080:8080 --network misy2 -t misy2/misy2-gateway`
 
 - users-service:
 
-`docker run --name users[0, 1...n] --network misy2 -t misy2/misy2-users`
+`sudo docker run --name users[0, 1...n] --network misy2 -t misy2/misy2-users`
 
 ## Test
 
