@@ -15,7 +15,7 @@ Microservice system - to demonstrate Spring Cloud stack. Can work locally or in 
 
 Gradle.
 
-###DB
+### DB
 
 H2 in-memory.
 
