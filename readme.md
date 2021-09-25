@@ -48,25 +48,25 @@ Build Docker images:
 
 `cd misy2-config-server`
 
-`docker build -t misy2/misy2-config .`
+`sudo docker build -t misy2/misy2-config .`
 
 - discovery-server:
 
 `cd misy2-discovery-server`
 
-`docker build -t misy2/misy2-discovery .`
+`sudo docker build -t misy2/misy2-discovery .`
 
 - gateway-server:
 
 `cd misy2-gateway-server`
 
-`docker build -t misy2/misy2-gateway .`
+`sudo docker build -t misy2/misy2-gateway .`
 
 - users-service:
 
 `cd misy2-users-service`
 
-`docker build -t misy2/misy2-users .`
+`sudo docker build -t misy2/misy2-users .`
 
 ## Run
 
@@ -125,6 +125,10 @@ Then others:
 - users-service:
 
 `sudo docker run --name users[0, 1...n] --network misy2 -t misy2/misy2-users`
+
+### Docker compose (Linux)
+
+`sudo docker-compose up`
 
 ## Test
 

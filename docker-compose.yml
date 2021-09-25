@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+  config-server:
+    image: misy2/misy2-config
+    container_name: config
+    ports:
+    - "8888:8888"
+
+  discovery-server:
+    image: misy2/misy2-discovery
+    container_name: discovery
+    depends_on:
+      - config-server
+    ports:
+    - "8761:8761"
+    environment:
+      WAIT_HOSTS: config-server:8888
+
+  gateway-server:
+    image: misy2/misy2-gateway
+    container_name: gateway
+    depends_on:
+      - config-server
+      - discovery-server
+    ports:
+    - "8080:8080"
+    environment:
+      WAIT_HOSTS: config-server:8888, discovery-server:8761
+
+  users-service1:
+    image: misy2/misy2-users
+    container_name: users1
+    depends_on:
+      - config-server
+      - discovery-server
+      - gateway-server
+    environment:
+      WAIT_HOSTS: config-server:8888, discovery-server:8761, gateway-server:8080
+
+  users-service2:
+    image: misy2/misy2-users
+    container_name: users2
+    depends_on:
+      - config-server
+      - discovery-server
+      - gateway-server
+    environment:
+      WAIT_HOSTS: config-server:8888, discovery-server:8761, gateway-server:8080
