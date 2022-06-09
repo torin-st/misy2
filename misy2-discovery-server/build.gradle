@@ -1,11 +1,11 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.4'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
     id 'java'
 }
 
-group = 'com.slyadz.misy2.discovery'
-version = '0.0.1-SNAPSHOT'
+group = 'com.slyadz.misy2'
+version = '1.0.0'
 sourceCompatibility = '11'
 
 configurations {
@@ -39,4 +39,12 @@ dependencyManagement {
 
 test {
     useJUnitPlatform()
+}
+
+bootJar {
+    enabled = true
+}
+
+bootBuildImage{
+    imageName=rootProject.name+'/'+dockerImageName
 }

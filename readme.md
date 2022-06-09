@@ -1,6 +1,6 @@
 # Misy2
 
-Microservice system - to demonstrate Spring Cloud stack. Can work locally or in Docker container.
+Microservice system - to demonstrate Spring Cloud stack. Can work locally or in Docker containers.
 
 ## Architecture
 
@@ -44,89 +44,44 @@ Build apps:
 `./gradlew build`
 
 Build Docker images:
-- config-server:
 
-`cd misy2-config-server`
-
-`sudo docker build -t misy2/misy2-config .`
-
-- discovery-server:
-
-`cd misy2-discovery-server`
-
-`sudo docker build -t misy2/misy2-discovery .`
-
-- gateway-server:
-
-`cd misy2-gateway-server`
-
-`sudo docker build -t misy2/misy2-gateway .`
-
-- users-service:
-
-`cd misy2-users-service`
-
-`sudo docker build -t misy2/misy2-users .`
+`docker-compose build`
 
 ## Run
 
 ### Local
 
+`cd misy2`
+
 At first, run misy2-config-server:
 
-`cd misy2-config-server`
+Linux: `./gradlew :misy2-config-server:bootRun`
 
-Linux: `./gradlew bootRun`
-
-Windows: `gradlew.bat bootRun`
+Windows: `gradlew.bat :misy2-config-server:bootRun`
 
 After then, run misy2-discovery-server:
 
-`cd misy2-discovery-server`
+Linux: `./gradlew :misy2-discovery-server:bootRun`
 
-Linux: `./gradlew bootRun`
-
-Windows: `gradlew.bat bootRun`
+Windows: `gradlew.bat  :misy2-discovery-server:bootRun`
 
 Then others:
 
 - gateway:
 
-`cd misy2-gateway-server`
+Linux: `./gradlew :misy2-gateway-server:bootRun`
 
-Linux: `./gradlew bootRun`
-
-Windows: `gradlew.bat bootRun`
+Windows: `gradlew.bat :misy2-gateway-server:bootRun`
 
 - users-service:
 
-`cd misy2-users-service`
+Linux: `./gradlew :misy2-users-service:bootRun`
 
-Linux: `./gradlew bootRun`
-
-Windows: `gradlew.bat bootRun`
-
-### Docker (Linux)
-
-At first, run misy2-config-server:
-
-`sudo docker run --name config -p 8888:8888 --network misy2 -t misy2/misy2-config`
-
-After then, run misy2-discovery-server:
-
-`sudo docker run --name discovery -p 8761:8761 --network misy2 -t misy2/misy2-discovery`
-
-Then others:
-
-- gateway:
-
-`sudo docker run --name gateway -p 8080:8080 --network misy2 -t misy2/misy2-gateway`
-
-- users-service:
-
-`sudo docker run --name users[0, 1...n] --network misy2 -t misy2/misy2-users`
+Windows: `gradlew.bat :misy2-users-service:bootRun`
 
 ### Docker compose (Linux)
+
+`cd misy2`
 
 `sudo docker-compose up`
 
@@ -138,7 +93,7 @@ Visit misy2-config-server\src\main\resources\configs\ to see configurations of a
 
 Visit http://localhost:8888/gateway-server/docker to see configuration for "docker" profile of "gateway-server" app.
 
-Visit http://localhost:8888/gateway-server/dev to see configuration for "dev" profile of "gateway-server" app.
+Visit http://localhost:8888/gateway-server/default to see configuration for "default" profile of "gateway-server" app.
 
 ### misy2-discovery-server
 
