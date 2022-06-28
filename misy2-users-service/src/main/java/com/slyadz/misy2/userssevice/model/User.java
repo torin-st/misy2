@@ -11,8 +11,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 public class User {
-	public interface Views {
-		interface idName{};
+		public interface Views {
+		interface idName {}
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
@@ -21,8 +21,7 @@ public class User {
 	@JsonView(Views.idName.class)
 	private String name;
 
-	public User() {	}
-
+	public User() {}
 	public User(String name) {
 		this.name = name;
 	}

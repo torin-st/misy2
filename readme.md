@@ -10,6 +10,8 @@ Microservice system - to demonstrate Spring Cloud stack. Can work locally or in 
 - misy2-discovery-server - Netflix Eureka service registry, port 8761
 - misy2-gateway-server - Spring Cloud Gateway, port 8080
 - misy2-users-sevice - simple crud service over User entity, random port
+- kafka - Apache Kafka instance, port 9092 (port 29092 in container network) 
+- zookeeper - Apache ZooKeeper instance for kafka
 
 ### Build
 
@@ -106,6 +108,11 @@ Visit http://localhost:8080/get to see how Gateway redirect request to http://ht
 Visit http://localhost:8080/users to see how Gateway redirect request to Users-service and get list of users, using
 load balancing (different port for request) and discovery server (service name instead host name).
 
+Perform POST request to http://localhost:8080/users to see how Gateway redirect request to Users-service and a new
+message in the "users"-topic in kafka will be created:
+
+`curl -X POST -H "Content-Type: application/json" -d '{"name":"Andy"}' http://localhost:8080/users`
+
 Visit http://localhost:8080/users without starting Users-service to see how Spring Cloud Circuit breaker in Gateway
 (Resilience4J) redirect request to http://localhost:8080/get.
 
@@ -129,3 +136,18 @@ To know an actual value of randomPort see output of users-service (console log) 
 Visit http://localhost:[randomPort]/api/instances/users-service to see list of registered instances of "users-service"
  services. The misy2-users-service will take about a minute to register itself in the registry and to refresh its own
   list of registered instances from the registry.
+
+### kafka
+
+misy2-users-service creates a new kafka topic with a name "users" after launch. You can see it by attaching to the
+kafka container:
+
+`docker exec -it kafka /bin/sh`
+
+and running a command:
+
+`kafka-topics --list --bootstrap-server localhost:9092`
+
+To see all new messages in a "users"-topic interactively you should run consumer console:
+
+`kafka-console-consumer --topic users --from-beginning --bootstrap-server localhost:9092`
