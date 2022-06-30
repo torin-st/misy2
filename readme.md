@@ -9,6 +9,7 @@ Microservice system - to demonstrate Spring Cloud stack. Can work locally or in 
 - misy2-config-server - Spring Cloud Config, port 8888
 - misy2-discovery-server - Netflix Eureka service registry, port 8761
 - misy2-gateway-server - Spring Cloud Gateway, port 8080
+- misy2-greeting-sevice - listener of kafka, random port
 - misy2-users-sevice - simple crud service over User entity, random port
 - kafka - Apache Kafka instance, port 9092 (port 29092 in container network) 
 - zookeeper - Apache ZooKeeper instance for kafka
@@ -136,6 +137,13 @@ To know an actual value of randomPort see output of users-service (console log) 
 Visit http://localhost:[randomPort]/api/instances/users-service to see list of registered instances of "users-service"
  services. The misy2-users-service will take about a minute to register itself in the registry and to refresh its own
   list of registered instances from the registry.
+
+### misy2-greeting-service
+
+This service is listening to the kafka's "users"-topic. And after receiving of a new message prints a message to the 
+console:
+
+`... Listener: User is created: User{id=6, name='Andy'}`
 
 ### kafka
 

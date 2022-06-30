@@ -1,7 +1,8 @@
 rootProject.name = 'misy2'
 
-include 'misy2-users-service'
+include 'misy2-config-server'
 include 'misy2-discovery-server'
 include 'misy2-gateway-server'
-include 'misy2-config-server'
+include 'misy2-greeting-service'
+include 'misy2-users-service'
 

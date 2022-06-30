@@ -35,6 +35,17 @@ services:
       WAIT_SLEEP_INTERVAL: 5
       WAIT_TIMEOUT: 60
 
+  greeting-service1:
+    build: misy2-greeting-service
+    image: misy2/greeting-service
+    container_name: greeting1
+    depends_on:
+      - config-server
+    environment:
+      WAIT_HOSTS: config:8888
+      WAIT_SLEEP_INTERVAL: 5
+      WAIT_TIMEOUT: 60
+
   users-service1:
     build: misy2-users-service
     image: misy2/users-service
