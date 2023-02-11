@@ -104,27 +104,27 @@ Visit http://localhost:8761/ to see Eureka dashboard.
 
 ### misy2-gateway-server
 
-Visit http://localhost:8080/get to see how Gateway redirect request to http://httpbin.org and add custom header.
+Visit http://localhost:8085/get to see how Gateway redirect request to http://httpbin.org and add custom header.
 
-Visit http://localhost:8080/users to see how Gateway redirect request to Users-service and get list of users, using
+Visit http://localhost:8085/users to see how Gateway redirect request to Users-service and get list of users, using
 load balancing (different port for request) and discovery server (service name instead host name).
 
-Perform POST request to http://localhost:8080/users to see how Gateway redirect request to Users-service and a new
+Perform POST request to http://localhost:8085/users to see how Gateway redirect request to Users-service and a new
 message in the "users"-topic in kafka will be created:
 
-`curl -X POST -H "Content-Type: application/json" -d '{"name":"Andy"}' http://localhost:8080/users`
+`curl -X POST -H "Content-Type: application/json" -d '{"name":"Andy"}' http://localhost:8085/users`
 
-Visit http://localhost:8080/users without starting Users-service to see how Spring Cloud Circuit breaker in Gateway
-(Resilience4J) redirect request to http://localhost:8080/get.
+Visit http://localhost:8085/users without starting Users-service to see how Spring Cloud Circuit breaker in Gateway
+(Resilience4J) redirect request to http://localhost:8085/get.
 
-Visit http://localhost:8080/headers to see how how Gateway redirect request to Users-service, Spring Cloud Sleuth
+Visit http://localhost:8085/headers to see how how Gateway redirect request to Users-service, Spring Cloud Sleuth
 adds headers (x-b3-traceid, x-b3-spanid, x-b3-parentspanid, x-b3-sampled). Look at users-service output
 (console log) to see headers values :
 
 `...c.s.m.u.controller.UserRestController    : header [x-b3-traceid]: 4d384d32cd2e7ec3`
 
 Then Users-service makes request to http://httpbin.org - you see response for this request at
-http://localhost:8080/headers. We have the same "x-b3-traceid" header and different "x-b3-parentspanid", "x-b3-spanid".
+http://localhost:8085/headers. We have the same "x-b3-traceid" header and different "x-b3-parentspanid", "x-b3-spanid".
 
 ### misy2-users-service
 

@@ -29,7 +29,7 @@ services:
       - config-server
       - discovery-server
     ports:
-    - "8080:8080"
+    - "8085:8085"
     environment:
       WAIT_HOSTS: config:8888, discovery:8761
       WAIT_SLEEP_INTERVAL: 5
