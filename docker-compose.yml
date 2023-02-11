@@ -68,7 +68,7 @@ services:
     environment:
       WAIT_HOSTS: config:8888, discovery:8761, gateway:8080
       WAIT_SLEEP_INTERVAL: 5
-      WAIT_TIMEOUT: 60
+      WAIT_TIMEOUT: 120
 
   users-service2:
     build: misy2-users-service
@@ -81,7 +81,7 @@ services:
     environment:
       WAIT_HOSTS: config:8888, discovery:8761, gateway:8080
       WAIT_SLEEP_INTERVAL: 5
-      WAIT_TIMEOUT: 60
+      WAIT_TIMEOUT: 120
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
