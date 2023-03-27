@@ -18,8 +18,8 @@ services:
     - "8761:8761"
     environment:
       WAIT_HOSTS: config:8888
-      WAIT_SLEEP_INTERVAL: 5
-      WAIT_TIMEOUT: 60
+      WAIT_SLEEP_INTERVAL: 10
+      WAIT_TIMEOUT: 120
 
   gateway-server:
     build: misy2-gateway-server
@@ -32,8 +32,8 @@ services:
     - "8085:8085"
     environment:
       WAIT_HOSTS: config:8888, discovery:8761
-      WAIT_SLEEP_INTERVAL: 5
-      WAIT_TIMEOUT: 60
+      WAIT_SLEEP_INTERVAL: 10
+      WAIT_TIMEOUT: 120
 
   greeting-service1:
     build: misy2-greeting-service
@@ -41,10 +41,12 @@ services:
     container_name: greeting1
     depends_on:
       - config-server
+      - zookeeper
+      - kafka      
     environment:
       WAIT_HOSTS: config:8888
-      WAIT_SLEEP_INTERVAL: 5
-      WAIT_TIMEOUT: 60
+      WAIT_SLEEP_INTERVAL: 10
+      WAIT_TIMEOUT: 120
 
   orders-service1:
     build: misy2-orders-service
@@ -52,10 +54,14 @@ services:
     container_name: orders1
     depends_on:
       - config-server
+      - discovery-server
+      - gateway-server      
+      - zookeeper
+      - kafka      
     environment:
-      WAIT_HOSTS: config:8888
-      WAIT_SLEEP_INTERVAL: 5
-      WAIT_TIMEOUT: 60
+      WAIT_HOSTS: config:8888, discovery:8761, gateway:8085
+      WAIT_SLEEP_INTERVAL: 10
+      WAIT_TIMEOUT: 120
 
   users-service1:
     build: misy2-users-service
@@ -65,9 +71,11 @@ services:
       - config-server
       - discovery-server
       - gateway-server
+      - zookeeper
+      - kafka
     environment:
-      WAIT_HOSTS: config:8888, discovery:8761, gateway:8080
-      WAIT_SLEEP_INTERVAL: 5
+      WAIT_HOSTS: config:8888, discovery:8761, gateway:8085
+      WAIT_SLEEP_INTERVAL: 10
       WAIT_TIMEOUT: 120
 
   users-service2:
@@ -78,9 +86,11 @@ services:
       - config-server
       - discovery-server
       - gateway-server
+      - zookeeper
+      - kafka
     environment:
-      WAIT_HOSTS: config:8888, discovery:8761, gateway:8080
-      WAIT_SLEEP_INTERVAL: 5
+      WAIT_HOSTS: config:8888, discovery:8761, gateway:8085
+      WAIT_SLEEP_INTERVAL: 10
       WAIT_TIMEOUT: 120
 
   zookeeper:
