@@ -1,4 +1,4 @@
-plugins {
+plugins { // we can include plugins from this section in subprojects without version
     id 'org.springframework.boot' version '2.4.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
@@ -6,6 +6,23 @@ plugins {
 
 repositories {
     mavenCentral()
+}
+
+subprojects {
+
+    apply plugin: "java"
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+        // eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
+    }
+
+    dependencies {
+        // determine versions of spring-cloud dependencies
+        implementation(platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"))
+    }
+
 }
 
 bootJar {
