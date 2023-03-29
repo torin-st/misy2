@@ -18,6 +18,10 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.ProducerListener;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
+import org.springframework.kafka.support.serializer.JsonSerializer;
+
+import com.slyadz.misy2.usersservice.api.event.UserVerificationFailedEventData;
+import com.slyadz.misy2.usersservice.api.event.UserVerificationSuccessEventData;
 
 @Configuration
 class KafkaProducerConfig {
@@ -28,22 +32,22 @@ class KafkaProducerConfig {
 	private String usersTopic;
 
 	@Bean
-	Map<String, Object> producerConfigs() {
-		Map<String, Object> props = new HashMap<>();
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-		return props;
+	Map<String, Object> stringProducerConfigs() {
+		Map<String, Object> properties = new HashMap<>();
+		properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+		properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+		properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+		return properties;
 	}
 
 	@Bean
-	ProducerFactory<String, String> producerFactory() {
-		return new DefaultKafkaProducerFactory<>(producerConfigs());
+	ProducerFactory<String, String> stringProducerFactory() {
+		return new DefaultKafkaProducerFactory<>(stringProducerConfigs());
 	}
 
 	@Bean
-	KafkaTemplate<String, String> kafkaTemplate() {
-		KafkaTemplate<String, String> kafkaTemplate = new KafkaTemplate<>(producerFactory());
+	KafkaTemplate<String, String> stringKafkaTemplate() {
+		KafkaTemplate<String, String> kafkaTemplate = new KafkaTemplate<>(stringProducerFactory());
 		kafkaTemplate.setMessageConverter(new StringJsonMessageConverter());
 		kafkaTemplate.setDefaultTopic(usersTopic);
 		kafkaTemplate.setProducerListener(new ProducerListener<String, String>() {
@@ -53,6 +57,44 @@ class KafkaProducerConfig {
 						recordMetadata.offset());
 			}
 		});
+		return kafkaTemplate;
+	}
+
+	private Map<String, Object> userVerificationFailedEventDataProducerConfig() {
+		Map<String, Object> properties = new HashMap<>();
+		properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+		properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+		properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+		return properties;
+	}
+
+	@Bean
+	ProducerFactory<String, UserVerificationFailedEventData> userVerificationFailedEventDataProducerFactory() {
+		return new DefaultKafkaProducerFactory<>(userVerificationFailedEventDataProducerConfig());
+	}
+
+	@Bean
+	KafkaTemplate<String, UserVerificationFailedEventData> userVerificationFailedEventDataKafkaTemplate() {
+		KafkaTemplate<String, UserVerificationFailedEventData> kafkaTemplate = new KafkaTemplate<>(userVerificationFailedEventDataProducerFactory());
+		return kafkaTemplate;
+	}
+
+	private Map<String, Object> userVerificationSuccessEventDataProducerConfig() {
+		Map<String, Object> properties = new HashMap<>();
+		properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+		properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+		properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+		return properties;
+	}
+
+	@Bean
+	ProducerFactory<String, UserVerificationSuccessEventData> userVerificationSuccessEventDataProducerFactory() {
+		return new DefaultKafkaProducerFactory<>(userVerificationSuccessEventDataProducerConfig());
+	}
+
+	@Bean
+	KafkaTemplate<String, UserVerificationSuccessEventData> userVerificationSuccessEventDataKafkaTemplate() {
+		KafkaTemplate<String, UserVerificationSuccessEventData> kafkaTemplate = new KafkaTemplate<>(userVerificationSuccessEventDataProducerFactory());
 		return kafkaTemplate;
 	}
 
