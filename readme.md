@@ -1,4 +1,4 @@
-# Misy2
+# misy2
 
 Microservice system - to demonstrate Spring Cloud stack. Can work locally or in Docker containers.
 
@@ -6,13 +6,16 @@ Microservice system - to demonstrate Spring Cloud stack. Can work locally or in 
 
 ### Services
 
-- misy2-config-server - Spring Cloud Config, port 8888
-- misy2-discovery-server - Netflix Eureka service registry, port 8761
-- misy2-gateway-server - Spring Cloud Gateway, port 8080
-- misy2-greeting-sevice - listener of kafka, random port
-- misy2-users-sevice - simple crud service over User entity, random port
-- kafka - Apache Kafka instance, port 9092 (port 29092 in container network) 
-- zookeeper - Apache ZooKeeper instance for kafka
+- misy2-config-server: Spring Cloud Config, port 8888
+- misy2-discovery-server: Netflix Eureka service registry, port 8761
+- misy2-gateway-server: Spring Cloud Gateway, port 8085
+- misy2-greeting-sevice: listener of kafka, random port
+- misy2-orders-sevice: crud service over Order entity, Sring Cloud Stream, random port
+- misy2-orders-sevice-api: events, topic's name, dto
+- misy2-users-sevice: crud service over User entity, Spring for Apache Kafka random port
+- misy2-users-sevice-api: events, topic's name, dto
+- kafka: Apache Kafka instance, port 9092 (port 29092 in container network) 
+- zookeeper: Apache ZooKeeper instance for kafka
 
 ### Build
 
@@ -126,7 +129,23 @@ adds headers (x-b3-traceid, x-b3-spanid, x-b3-parentspanid, x-b3-sampled). Look 
 Then Users-service makes request to http://httpbin.org - you see response for this request at
 http://localhost:8085/headers. We have the same "x-b3-traceid" header and different "x-b3-parentspanid", "x-b3-spanid".
 
+Perform POST request to http://localhost:8085/orders to see how Gateway redirect request to Orders-service and a saga will
+be performed (see "misy2-oreders-service"):
+
+`curl -X POST -H "Content-Type: application/json" -d '{"userID":1, "deliveryTime":"2023-03-17T14:00:00"}' http://localhost:8085/orders`
+
+### misy2-orders-service
+
+After receiving of POST request to create an order start a saga:
+1. Orders-service: create an orders with a state APPROVAL_PENDING and publish creational event.
+2. Users-service: listen to creational events from Orders-service, verify order (user with name "Jake"
+can't create an order), publish event if validation is successfull or failed.
+3. Orders-service: listen to validation events from Users-service, change a state of the order
+to APPROVED or REJECTED.
+
 ### misy2-users-service
+
+At startup add 4 users: new User("Jake"), new User("Jane"), new User("John"), new User("Jennifer").
 
 Visit http://localhost:[randomPort]/api/users to see list of users.
 
@@ -147,8 +166,14 @@ console:
 
 ### kafka
 
-misy2-users-service creates a new kafka topic with a name "users" after launch. You can see it by attaching to the
-kafka container:
+misy2-users-service creates topics after launch: "users".
+
+misy2-orders-service or misy2-users-service creates topics after launch:
+- "orderCreationChannel-out-0", 
+- "userVerificationFailed-in-0",
+- "userVerificationSuccess-in-0".
+
+You can see it by attaching to the kafka container:
 
 `docker exec -it kafka /bin/sh`
 
@@ -159,3 +184,25 @@ and running a command:
 To see all new messages in a "users"-topic interactively you should run consumer console:
 
 `kafka-console-consumer --topic users --from-beginning --bootstrap-server localhost:9092`
+
+## Development
+
+### Docker compose (Linux)
+
+После внесённых изменений пересобираем проект:
+
+`cd misy2`
+`./gradlew build`
+
+или конкретный подпроект:
+
+`cd misy2`
+`./gradlew :misy2-config-server:build`
+
+Далее обновляем все сервисы:
+
+`docker-compose build`
+
+или конкретный сервис:
+
+`docker-compose build config-server`
