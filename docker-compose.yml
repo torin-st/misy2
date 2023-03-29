@@ -78,20 +78,23 @@ services:
       WAIT_SLEEP_INTERVAL: 10
       WAIT_TIMEOUT: 120
 
-  users-service2:
-    build: misy2-users-service
-    image: misy2/users-service
-    container_name: users2
-    depends_on:
-      - config-server
-      - discovery-server
-      - gateway-server
-      - zookeeper
-      - kafka
-    environment:
-      WAIT_HOSTS: config:8888, discovery:8761, gateway:8085
-      WAIT_SLEEP_INTERVAL: 10
-      WAIT_TIMEOUT: 120
+  # For correct work of saga we need just one instanse of users-service.
+  # TODO: think how to organize several users-service instances
+  #
+  # users-service2:
+  #   build: misy2-users-service
+  #   image: misy2/users-service
+  #   container_name: users2
+  #   depends_on:
+  #     - config-server
+  #     - discovery-server
+  #     - gateway-server
+  #     - zookeeper
+  #     - kafka
+  #   environment:
+  #     WAIT_HOSTS: config:8888, discovery:8761, gateway:8085
+  #     WAIT_SLEEP_INTERVAL: 10
+  #     WAIT_TIMEOUT: 120
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
