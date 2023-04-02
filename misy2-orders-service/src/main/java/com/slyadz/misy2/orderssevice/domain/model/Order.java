@@ -1,4 +1,4 @@
-package com.slyadz.misy2.orderssevice;
+package com.slyadz.misy2.orderssevice.domain.model;
 
 import java.time.LocalDateTime;
 

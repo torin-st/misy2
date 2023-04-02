@@ -1,4 +1,4 @@
-package com.slyadz.misy2.orderssevice;
+package com.slyadz.misy2.orderssevice.application.internal.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

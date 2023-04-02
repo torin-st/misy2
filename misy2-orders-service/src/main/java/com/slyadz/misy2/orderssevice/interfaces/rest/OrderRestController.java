@@ -1,4 +1,4 @@
-package com.slyadz.misy2.orderssevice;
+package com.slyadz.misy2.orderssevice.interfaces.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.slyadz.misy2.orderssevice.api.dto.CreateOrderRequest;
+import com.slyadz.misy2.orderssevice.application.internal.services.OrderService;
+import com.slyadz.misy2.orderssevice.domain.model.OrderId;
 
 @RestController
 @RequestMapping(path = "/api/orders")

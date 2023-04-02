@@ -1,10 +1,10 @@
-package com.slyadz.misy2.orderssevice;
+package com.slyadz.misy2.orderssevice.domain.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-class OrderId {
+public class OrderId {
     @Column(name = "order_id")
     private String orderId;
 

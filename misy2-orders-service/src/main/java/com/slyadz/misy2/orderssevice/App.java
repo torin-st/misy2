@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.slyadz.misy2.orderssevice.application.internal.services.OrderService;
+import com.slyadz.misy2.orderssevice.domain.model.OrderId;
 import com.slyadz.misy2.usersservice.api.event.UserVerificationFailedEventData;
 import com.slyadz.misy2.usersservice.api.event.UserVerificationSuccessEventData;
 

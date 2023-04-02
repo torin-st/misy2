@@ -1,4 +1,4 @@
-package com.slyadz.misy2.orderssevice;
+package com.slyadz.misy2.orderssevice.application.internal.services;
 
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
@@ -7,6 +7,11 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import com.slyadz.misy2.orderssevice.domain.model.Order;
+import com.slyadz.misy2.orderssevice.domain.model.OrderId;
+import com.slyadz.misy2.orderssevice.domain.model.OrderState;
+import com.slyadz.misy2.orderssevice.infrastructure.repositories.springdata.OrderRepository;
 
 @Service
 public class OrderService {
