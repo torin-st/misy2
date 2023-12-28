@@ -10,7 +10,7 @@ Microservice system - to demonstrate Spring Cloud stack. Can work locally or in 
 - misy2-discovery-server: Netflix Eureka service registry, port 8761
 - misy2-gateway-server: Spring Cloud Gateway, port 8085
 - misy2-greeting-sevice: listener of kafka, random port
-- misy2-orders-sevice: crud service over Order entity, Sring Cloud Stream, random port
+- misy2-orders-sevice: crud service over Order entity, Spring Cloud Stream, random port
 - misy2-orders-sevice-api: events, topic's name, dto
 - misy2-users-sevice: crud service over User entity, Spring for Apache Kafka random port
 - misy2-users-sevice-api: events, topic's name, dto
