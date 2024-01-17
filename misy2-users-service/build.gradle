@@ -6,7 +6,6 @@ plugins {
 
 group = 'com.slyadz.misy2'
 version = '1.0.0'
-sourceCompatibility = '11'
 
 configurations {
     compileOnly {
