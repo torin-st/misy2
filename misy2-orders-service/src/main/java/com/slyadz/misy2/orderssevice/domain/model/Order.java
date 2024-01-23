@@ -2,19 +2,19 @@ package com.slyadz.misy2.orderssevice.domain.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 import com.slyadz.misy2.orderssevice.api.event.OrderCreatedEvent;
 import com.slyadz.misy2.orderssevice.api.event.OrderCreatedEventData;
+
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "orders")
