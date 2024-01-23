@@ -27,7 +27,7 @@ H2 in-memory.
 
 ### Prerequisites
 
-- Java SDK 11
+- Java SDK 17
 - Docker (if run in container)
 - Docker network (if run in container): `docker network create misy2`
 
