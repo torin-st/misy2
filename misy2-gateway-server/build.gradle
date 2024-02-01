@@ -28,10 +28,6 @@ test {
     useJUnitPlatform()
 }
 
-bootJar {
-    enabled = true
-}
-
 bootBuildImage{
     imageName=rootProject.name+'/'+dockerImageName
 }

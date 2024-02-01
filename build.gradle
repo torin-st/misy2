@@ -30,6 +30,11 @@ subprojects {
         enabled = false
     }
 
+    bootJar {
+        // generate executable fat-jar
+        enabled = true
+    }
+
 }
 
 bootJar {
