@@ -22,6 +22,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation platform('io.micrometer:micrometer-bom:latest.release')
+    implementation 'io.micrometer:micrometer-observation'
+    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
     implementation project (':misy2-orders-service-api')
     implementation project (':misy2-users-service-api')
     compileOnly 'org.projectlombok:lombok'

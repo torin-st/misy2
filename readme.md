@@ -120,14 +120,13 @@ message in the "users"-topic in kafka will be created:
 Visit http://localhost:8085/users without starting Users-service to see how Spring Cloud Circuit breaker in Gateway
 (Resilience4J) redirect request to http://localhost:8085/get.
 
-Visit http://localhost:8085/headers to see how how Gateway redirect request to Users-service, Spring Cloud Sleuth
-adds headers (x-b3-traceid, x-b3-spanid, x-b3-parentspanid, x-b3-sampled). Look at users-service output
-(console log) to see headers values :
+Visit http://localhost:8085/headers to see how Gateway redirect request to Users-service, Micrometer
+adds header "Traceparent". Look at users-service output (console log) to see header from Gateway:
 
-`...c.s.m.u.controller.UserRestController    : header [x-b3-traceid]: 4d384d32cd2e7ec3`
+`users1     | 2024-02-06T12:48:30.300Z  INFO 8 --- [users-service] [o-auto-1-exec-1] [65c22a9dd242b9a49955948fbda66fe4-6fef9c80802f96f4] c.s.m.u.controller.UserRestController    : header [Traceparent]: 00-65c22a9dd242b9a49955948fbda66fe4-fcb3e3efc9c11d18-01`
 
 Then Users-service makes request to http://httpbin.org - you see response for this request at
-http://localhost:8085/headers. We have the same "x-b3-traceid" header and different "x-b3-parentspanid", "x-b3-spanid".
+http://localhost:8085/headers. We have the same parent-id part "65c22a9dd242b9a49955948fbda66fe4" and different span-id parts of "Traceparent" header.
 
 Perform POST request to http://localhost:8085/orders to see how Gateway redirect request to Orders-service and a saga will
 be performed (see "misy2-oreders-service"):
@@ -189,20 +188,20 @@ To see all new messages in a "users"-topic interactively you should run consumer
 
 ### Docker compose (Linux)
 
-После внесённых изменений пересобираем проект:
+After we made changes - rebuild the whole project:
 
 `cd misy2`
 `./gradlew build`
 
-или конкретный подпроект:
+or a particular subproject:
 
 `cd misy2`
 `./gradlew :misy2-config-server:build`
 
-Далее обновляем все сервисы:
+Next update all docker containers:
 
 `docker-compose build`
 
-или конкретный сервис:
+or a particular container:
 
 `docker-compose build config-server`

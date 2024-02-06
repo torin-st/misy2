@@ -19,8 +19,8 @@ public class UsersServiceApplication {
 	}
 
 	@Bean
-	public WebClient getWebClient() {
-		return WebClient.builder().baseUrl("http://httpbin.org:80").build();
+	public WebClient webClient(WebClient.Builder webClientBuilder) {
+		return webClientBuilder.baseUrl("http://httpbin.org:80").build();
 	}
 
 	@Bean

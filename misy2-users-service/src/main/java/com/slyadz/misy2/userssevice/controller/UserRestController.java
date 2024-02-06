@@ -68,12 +68,8 @@ public final class UserRestController {
 	}
 
 	@GetMapping("headers")
-	public String getSleuthInfo(HttpServletRequest httpServletRequest)	{
-		logger.info("header [x-b3-traceid]: " + httpServletRequest.getHeader("x-b3-traceid"));
-		logger.info("header [x-b3-spanid]: " + httpServletRequest.getHeader("x-b3-spanid"));
-		logger.info("header [x-b3-parentspanid]: " + httpServletRequest.getHeader("x-b3-parentspanid"));
-		logger.info("header [x-b3-sampled]: " + httpServletRequest.getHeader("x-b3-sampled"));
-
+	public String getMicrometerInfo(HttpServletRequest httpServletRequest)	{
+		logger.info("header [Traceparent]: " + httpServletRequest.getHeader("Traceparent"));
 
 		WebClient.UriSpec<WebClient.RequestBodySpec> uriSpec = webClient.method(HttpMethod.GET);
 		WebClient.RequestBodySpec requestBodySpec = uriSpec.uri("/headers");
